@@ -3,7 +3,7 @@
    [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://github.com/StefanoMnS/carousel-exp236.git)
 
 
-dashboard that can carousel multiple cards
+### dashboard that can carousel multiple cards
 
 
 #### Exp-236 Carousel
