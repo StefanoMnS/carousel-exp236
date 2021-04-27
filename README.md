@@ -18,7 +18,7 @@ dashboard that can carousel multiple cards
    - Needs to include the greeting and first name (if user signed in)
    - Little X on the cards to remove individual messages - if all messages have been removed by a user, then dashboard should disappear
 
-- Assets:
+- Assets:              
    • [fonts] https://marksandspencer.invisionapp.com/console/Dashboard-ckniwy5k402qu010l4zea617m/ckniwy7b602qy010lfhcrf0wj/inspect.        
    • [design] https://marksandspencer.invisionapp.com/console/Dashboard-ckniwy5k402qu010l4zea617m/ckniwy7b602qy010lfhcrf0wj/inspect.     
 
