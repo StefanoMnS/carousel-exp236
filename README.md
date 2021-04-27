@@ -1,10 +1,9 @@
 # Carousel-exp236
-dashboard that can carousel multiple cards
-
 [![GitHub Super-Linter](https://github.com/StefanoMnS/carousel-exp236/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
    [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://github.com/StefanoMnS/carousel-exp236.git)
 
 
+dashboard that can carousel multiple cards
 
 
 #### Exp-236 Carousel
