@@ -1,17 +1,17 @@
-const closurObj = (function() {
-    const getHandle = function() {
-        if (document.querySelector('.main-container') !== null) {
-            return document.querySelector('.main-container')
-        } else if (document.querySelector('.container') !== null) {
-            return document.querySelector('.container')
-        } else if (document.querySelector('.full-width-container') !== null) {
-            return document.querySelector('.full-width-container')
-        } else if (window.location.pathname.indexOf('l') === 1) {
-            return document.querySelector('.container')
-        }
+const closurObj = (function () {
+  const getHandle = function () {
+    if (document.querySelector('.main-container') !== null) {
+      return document.querySelector('.main-container')
+    } else if (document.querySelector('.container') !== null) {
+      return document.querySelector('.container')
+    } else if (document.querySelector('.full-width-container') !== null) {
+      return document.querySelector('.full-width-container')
+    } else if (window.location.pathname.indexOf('l') === 1) {
+      return document.querySelector('.container')
     }
+  }
 
-    const mainStyles = `
+  const mainStyles = `
 .welcome--message {
      width: 100%;
      display: flex;
@@ -331,97 +331,97 @@ header section#progressiveHeaderSection, header section {
     }
   `
 
-    return {
-        addCSS: function(css) {
-            const head = document.getElementsByTagName('head')[0]
-            const s = document.createElement('style')
-            s.setAttribute('type', 'text/css')
-            s.appendChild(document.createTextNode(css))
-            head.appendChild(s)
-        },
-        checkSlide: function(elem) {
-            let distance = elem.getBoundingClientRect();
+  return {
+    addCSS: function (css) {
+      const head = document.getElementsByTagName('head')[0]
+      const s = document.createElement('style')
+      s.setAttribute('type', 'text/css')
+      s.appendChild(document.createTextNode(css))
+      head.appendChild(s)
+    },
+    checkSlide: function (elem) {
+      const distance = elem.getBoundingClientRect()
             return (
-                distance.top >= 0 &&
+        distance.top >= 0 &&
                 distance.left >= 0 &&
                 distance.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
                 distance.right <= (window.innerWidth || document.documentElement.clientWidth)
-            );
+      )
         },
 
-        init: function() {
-            let offset = 0;
-            const carousel = document.querySelector("[data-target='carousel']"),
-                card = carousel.querySelector("[data-target='card']"),
-                leftButton = document.querySelector("[data-action='slideLeft']"),
-                rightButton = document.querySelector("[data-action='slideRight']"),
+    init: function () {
+      let offset = 0
+            const carousel = document.querySelector("[data-target='carousel']");
+                const card = carousel.querySelector("[data-target='card']");
+                const leftButton = document.querySelector("[data-action='slideLeft']");
+                const rightButton = document.querySelector("[data-action='slideRight']");
                 // Limit carousel width
-                carouselWidth = carousel.offsetWidth,
-                cardStyle = card.currentStyle || window.getComputedStyle(card),
-                cardMarginRight = Number(cardStyle.marginRight.match(/\d+/g)[0]),
+                const carouselWidth = carousel.offsetWidth;
+                const cardStyle = card.currentStyle || window.getComputedStyle(card);
+                const cardMarginRight = Number(cardStyle.marginRight.match(/\d+/g)[0]);
                 // total num of cards
-                cardCount = carousel.querySelectorAll("[data-target='card']").length,
-                cardWidth = card.offsetWidth,
-                maxX = cardCount * cardWidth + cardMarginRight;
-            // initial pos
-            (offset === 0) ? leftButton.classList.add('hide'): rightButton.classList.remove('hide');
+                const cardCount = carousel.querySelectorAll("[data-target='card']").length;
+                const cardWidth = card.offsetWidth;
+                const maxX = cardCount * cardWidth + cardMarginRight;
+      // initial pos
+      (offset === 0) ? leftButton.classList.add('hide') : rightButton.classList.remove('hide')
 
             const doArrows = (os) => {
-                let lst = document.getElementById('lacarouselle'),
-                    lastSli = lst.children[lst.childElementCount - 2];
+        const lst = document.getElementById('lacarouselle');
+                    let lastSli = lst.children[lst.childElementCount - 2]
                 // hide/show arrows
                 if (os < 0) {
-                    leftButton.classList.remove('hide');
-                    if (closurObj.checkSlide(lastSli)) rightButton.classList.add('hide');
+          leftButton.classList.remove('hide')
+                    if (closurObj.checkSlide(lastSli)) rightButton.classList.add('hide')
                 } else if (os === 0) {
-                    leftButton.classList.add('hide')
-                    rightButton.classList.remove('hide')
-                }
-            }
+          leftButton.classList.add('hide')
+          rightButton.classList.remove('hide')
+        }
+      }
 
-            // click events
-            leftButton.addEventListener('click', function() {
-                if (offset !== 0 && window.innerWidth >= 1025) {
-                    offset += cardWidth * 6;
+      // click events
+      leftButton.addEventListener('click', function () {
+        if (offset !== 0 && window.innerWidth >= 1025) {
+          offset += cardWidth * 6
+                    carousel.style.transform = 'translateX(' + offset + 'px' + ')'
+          doArrows(offset)
+        }
+      })
+
+      rightButton.addEventListener('click', function () {
+        if (offset > -maxX && window.innerWidth >= 1025) {
+          offset -= cardWidth * 6
                     carousel.style.transform = 'translateX(' + offset + 'px' + ')'
                     doArrows(offset)
-                }
-            })
+        }
+      })
+    },
 
-            rightButton.addEventListener('click', function() {
-                if (offset > -maxX && window.innerWidth >= 1025) {
-                    offset -= cardWidth * 6;
-                    carousel.style.transform = 'translateX(' + offset + 'px' + ')';
-                    doArrows(offset)
-                }
-            })
-        },
-
-        removeSiteStripe: function() {
-            if (document.querySelector('.page__site-stripe')) {
-                const stripe = document.querySelector('.page__site-stripe')
-                stripe.style.marginDown = 0;
+    removeSiteStripe: function () {
+      if (document.querySelector('.page__site-stripe')) {
+        const stripe = document.querySelector('.page__site-stripe')
+        stripe.style.marginDown = 0
             }
-        },
+    },
 
-        removeHidden: function() {
-            const hd = document.querySelector('.carousel__wrapper')
-            if (hd.classList.contains('hidden')) {
-                return hd.classList.remove('hidden')
-            }
-        },
+    removeHidden: function () {
+      const hd = document.querySelector('.carousel__wrapper')
+      if (hd.classList.contains('hidden')) {
+        return hd.classList.remove('hidden')
+      }
+    },
 
-        addBanner: function(sparksOptions) {
-            const {
-                visitorGreet, visitorName
-            } = sparksOptions;
-            this.addCSS(mainStyles);
-            const cat = getHandle();
-            const visitNGreet = visitorGreet + ' ' + visitorName;
+    addBanner: function (sparksOptions) {
+      const {
+        visitorGreet, visitorName
+      } = sparksOptions
+            this.addCSS(mainStyles)
+            const cat = getHandle()
+            const visitNGreet = visitorGreet + ' ' + visitorName
             // cat.style.cssText = null
             const carsl = document.createElement('div')
-            carsl.className = 'carousel__wrapper'
-            carsl.innerHTML =
+      carsl.className = 'carousel__wrapper'
+      carsl.innerHTML =
                 '<div class="carousel--container"> <div class="welcome--message"> <p>' +
                 visitNGreet +
                 `
@@ -449,121 +449,118 @@ header section#progressiveHeaderSection, header section {
             </div>
         <div class="carousel__dots"> <a class="carousel--dot"> <span class="visuallyhidden">Slide 1</span> <span class="page"> </span> </a> <a class="carousel--dot sele"> <span class="visuallyhidden">Slide 2</span> <span class="page"></span> <span class="visuallyhidden">(Current Slide) </span> </a> <a class="carousel--dot"> <span class="visuallyhidden">Slide 3 </span> <span class="page"> </span></a> </div></div>`
 
-            if (cat !== undefined) cat.parentElement.insertBefore(carsl, cat);
-            this.init();
+      if (cat !== undefined) cat.parentElement.insertBefore(carsl, cat)
+            this.init()
         }
-    }
+  }
 })()
 
 window.addEventListener(
-    'resize',
-    function() {
-        closurObj.init();
-        document.body.scrollTop();
+  'resize',
+  function () {
+    closurObj.init()
+        document.body.scrollTop()
     },
-    false
+  false
 )
 
+// load event
+window.addEventListener('load', function () {
+  // fns
 
-//load event
-window.addEventListener('load', function() {
+  function getGreet () {
+    const greet = document.getElementById('helloText')
+    return greet.textContent.trim()
+  }
 
-
-    //fns
-
-    function getGreet() {
-        const greet = document.getElementById('helloText')
-        return greet.textContent.trim()
-    }
-
-    const sparkCards = [
+  const sparkCards = [
 
     {
-        heading: 'Duck Feather',
-        type: 'viewBag',
-        footer: 'View bag',
-        image: 'https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w  " data-sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" data-src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " alt="" class="promo__tile-image lazyloaded" sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" srcset="  https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w',
-        width: 94,
-        height: 130
+      heading: 'Duck Feather',
+      type: 'viewBag',
+      footer: 'View bag',
+      image: 'https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w  " data-sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" data-src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " alt="" class="promo__tile-image lazyloaded" sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" srcset="  https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w',
+      width: 94,
+      height: 130
     }, {
-        heading: 'Your recent order',
-        type: 'viewOrder',
-        footer: 'View order',
-        image: 'https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w  " data-sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" data-src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " alt="" class="promo__tile-image lazyloaded" sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" srcset="  https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w',
-        width: 94,
-        height: 130
+      heading: 'Your recent order',
+      type: 'viewOrder',
+      footer: 'View order',
+      image: 'https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w  " data-sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" data-src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " alt="" class="promo__tile-image lazyloaded" sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" srcset="  https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w',
+      width: 94,
+      height: 130
     }, {
-        heading: 'Recently viewed',
-        type: 'seeAll',
-        footer: 'See all',
-        image: 'https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w  " data-sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" data-src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " alt="" class="promo__tile-image lazyloaded" sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" srcset="  https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w',
-        width: 94,
-        height: 130
-    },
-
-     {
-        heading: 'Duck Feather',
-        type: 'viewBag',
-        footer: 'View bag',
-        image: 'https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w  " data-sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" data-src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " alt="" class="promo__tile-image lazyloaded" sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" srcset="  https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w',
-        width: 94,
-        height: 130
+      heading: 'Recently viewed',
+      type: 'seeAll',
+      footer: 'See all',
+      image: 'https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w  " data-sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" data-src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " alt="" class="promo__tile-image lazyloaded" sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" srcset="  https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w',
+      width: 94,
+      height: 130
     },
 
     {
-        heading: 'Your recent order',
-        type: 'viewOrder',
-        footer: 'View order',
-        image: 'https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w  " data-sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" data-src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " alt="" class="promo__tile-image lazyloaded" sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" srcset="  https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w',
-        width: 94,
-        height: 130
+      heading: 'Duck Feather',
+      type: 'viewBag',
+      footer: 'View bag',
+      image: 'https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w  " data-sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" data-src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " alt="" class="promo__tile-image lazyloaded" sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" srcset="  https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w',
+      width: 94,
+      height: 130
+    },
+
+    {
+      heading: 'Your recent order',
+      type: 'viewOrder',
+      footer: 'View order',
+      image: 'https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w  " data-sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" data-src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " alt="" class="promo__tile-image lazyloaded" sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" srcset="  https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w',
+      width: 94,
+      height: 130
     }, {
-        heading: 'Recently viewed',
-        type: 'seeAll',
-        footer: 'See all',
-        image: 'https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w  " data-sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" data-src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " alt="" class="promo__tile-image lazyloaded" sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" srcset="  https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w',
-        width: 94,
-        height: 130
+      heading: 'Recently viewed',
+      type: 'seeAll',
+      footer: 'See all',
+      image: 'https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w  " data-sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" data-src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " src="       https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg   " alt="" class="promo__tile-image lazyloaded" sizes="(min-width: 1280px) 900px, (min-width: 768px) 660px, 710px" srcset="  https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=710&amp;qlt=70&amp;fmt=pjpeg 710w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=660&amp;qlt=70&amp;fmt=pjpeg 660w,    https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w, https://asset2.cxnmarksandspencer.com/is/image/mands/22042021_hp_quadrapule-1-1200x1600.jpg?wid=900&amp;qlt=70&amp;fmt=pjpeg 900w',
+      width: 94,
+      height: 130
     }
 
-    ]
+  ]
 
-    const allSparks = function() {
-        const data = {}
-        if ('sparksSSO' in window.sessionStorage) {
-            const session = JSON.parse(window.sessionStorage.getItem('sparksSSO'))
-            data.addedOffers = session.totalAddedOffers
-            data.allOffers = session.totalOffers
-            data.newOffers = data.allOffers - data.addedOffers
-            data.allCards = session.allOffers[0].offers
-            return data
-        }
+  const allSparks = function () {
+    const data = {}
+    if ('sparksSSO' in window.sessionStorage) {
+      const session = JSON.parse(window.sessionStorage.getItem('sparksSSO'))
+      data.addedOffers = session.totalAddedOffers
+      data.allOffers = session.totalOffers
+      data.newOffers = data.allOffers - data.addedOffers
+      data.allCards = session.allOffers[0].offers
+      return data
     }
+  }
 
-    function getCookie(cname) {
-        const name = cname + '='
-        const decodedCookie = decodeURIComponent(document.cookie)
-        const ca = decodedCookie.split(';')
-        for (let i = 0; i < ca.length; i++) {
-            let c = ca[i]
-            while (c.charAt(0) === ' ') {
-                c = c.substring(1)
-            }
-            if (c.indexOf(name) === 0) {
-                const result = c.substring(name.length, c.length)
-                const output = result.slice(0, result.indexOf(' ') + 2)
-                return output
-            }
-        }
+  function getCookie (cname) {
+    const name = cname + '='
+    const decodedCookie = decodeURIComponent(document.cookie)
+    const ca = decodedCookie.split(';')
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i]
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1)
+      }
+      if (c.indexOf(name) === 0) {
+        const result = c.substring(name.length, c.length)
+        const output = result.slice(0, result.indexOf(' ') + 2)
+        return output
+      }
     }
+  }
 
-    function compileCards(cards) {
-    	//let lacar = document.getElementById('lacarouselle');
-    	//lacar.innerHTmL = '';
-        let crds = document.createElement('div')
-        crds.innerHTmL += ''
-        for (let c = 0; c < cards.length; c++) {
-            crds += `
+  function compileCards (cards) {
+    	// let lacar = document.getElementById('lacarouselle');
+    	// lacar.innerHTmL = '';
+    let crds = document.createElement('div')
+    crds.innerHTmL += ''
+    for (let c = 0; c < cards.length; c++) {
+      crds += `
 
 
       <li class="card" data-target="card">
@@ -580,80 +577,73 @@ window.addEventListener('load', function() {
           </svg>
         </section>
       </li>`
-        }
-
-
-        return crds
     }
 
-    function doCards() {
-        new Promise((resolve) => {
-                resolve(compileCards(sparkCards))
-            })
-            .then((data) => {
+    return crds
+  }
 
-                if (document.getElementById('lacarouselle')) {
-                    const cars = document.getElementById('lacarouselle')
-                    carsInnner = cars.innerHTML = "";
-                    const ckndat = data.replace(/\[.*?\]/, '').trim()
+  function doCards () {
+    new Promise((resolve) => {
+      resolve(compileCards(sparkCards))
+    })
+      .then((data) => {
+        if (document.getElementById('lacarouselle')) {
+          const cars = document.getElementById('lacarouselle')
+          carsInnner = cars.innerHTML = '';
+          const ckndat = data.replace(/\[.*?\]/, '').trim()
 
-                    cars.innerHTML += `${ckndat} <iframe style="margin-right:0px;
+          cars.innerHTML += `${ckndat} <iframe style="margin-right:0px;
 	            border-width:1px; overflow: hidden;
 	            visibility: hidden; max-width: 0;" srcdoc='<div style="width:0px; border-width: 0px;"></div>'></iframe>`
+        }
+      })
+  }
 
-                }
+  const sparksOptions = {
+    allOffers: allSparks(),
+    cards: doCards(),
+    visitorName: getCookie('MS_USER_COOKIE_10151') || 'Not available (see status)',
+    visitorGreet: getGreet(),
 
-            })
-    }
-
-
-
-    const sparksOptions = {
-        allOffers: allSparks(),
-        cards: doCards(),
-        visitorName: getCookie('MS_USER_COOKIE_10151') || 'Not available (see status)',
-        visitorGreet: getGreet(),
-
-        //visitorStatus
-        other: {
-            visitorStatus:
+    // visitorStatus
+    other: {
+      visitorStatus:
                 !!this.visitorName && this.visitorName !== undefined ? 'signed-in' : 'signed-out'
-        }
     }
+  }
 
-    console.log('\n\n sparksOptions Obj: ', sparksOptions, '\n\n')
+  console.log('\n\n sparksOptions Obj: ', sparksOptions, '\n\n')
 
-
-    if (!document.cookie.indexOf('MS_USER_COOKIE_10151') > -1) {
-        let {
-            other: {
-                visitorStatus
-            }
-        } = sparksOptions
-        closurObj.addBanner(sparksOptions)
-        if (!window.localStorage.getItem('sparksOptions') >= -1 &&
+  if (!document.cookie.indexOf('MS_USER_COOKIE_10151') > -1) {
+    let {
+      other: {
+        visitorStatus
+      }
+    } = sparksOptions
+    closurObj.addBanner(sparksOptions)
+    if (!window.localStorage.getItem('sparksOptions') >= -1 &&
             visitorStatus !== 'signed-out'
-        ) {
-            window.localStorage.setItem(
-                'sparksOptions',
-                JSON.stringify(sparksOptions)
-            )
-            visitorStatus = 'signed-out'
-        }
+    ) {
+      window.localStorage.setItem(
+        'sparksOptions',
+        JSON.stringify(sparksOptions)
+      )
+      visitorStatus = 'signed-out'
     }
+  }
 
-    function removeUserSparks() {
-        let {
-            other: {
-                visitorStatus
-            }
-        } = sparksOptions
+  function removeUserSparks () {
+    let {
+      other: {
+        visitorStatus
+      }
+    } = sparksOptions
 
-        window.localStorage.removeItem('sparksOptions')
-        visitorStatus = 'signed-out'
-        return visitorStatus
-    }
+    window.localStorage.removeItem('sparksOptions')
+    visitorStatus = 'signed-out'
+    return visitorStatus
+  }
 
-    // only needed once per visit
-    window.onbeforeunload = () => removeUserSparks()
+  // only needed once per visit
+  window.onbeforeunload = () => removeUserSparks()
 })
