@@ -281,12 +281,12 @@ margin-top: -10px;
     }
      .carousel__wrapper ul.carousel {
 
-	    min-width: 100%;
-	    flex-wrap: nowrap;
-	    padding: 8px 0 10px 16px;
-	    margin-bottom: 3rem;
-	    overflow-x: scroll;
-	    transition: all 1s ease;
+    min-width: 100%;
+    flex-wrap: nowrap;
+    padding: 8px 0 10px 16px;
+    margin-bottom: 3rem;
+    overflow-x: scroll;
+    transition: all 1s ease;
     }
      ul.carousel .card {
          max-width: 154px;
@@ -341,39 +341,39 @@ header section#progressiveHeaderSection, header section {
     },
     checkSlide: function (elem) {
       const distance = elem.getBoundingClientRect()
-            return (
+      return (
         distance.top >= 0 &&
                 distance.left >= 0 &&
                 distance.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
                 distance.right <= (window.innerWidth || document.documentElement.clientWidth)
       )
-        },
+    },
 
     init: function () {
       let offset = 0
-            const carousel = document.querySelector("[data-target='carousel']");
-                const card = carousel.querySelector("[data-target='card']");
-                const leftButton = document.querySelector("[data-action='slideLeft']");
-                const rightButton = document.querySelector("[data-action='slideRight']");
+      const carousel = document.querySelector("[data-target='carousel']")
+                const card = carousel.querySelector("[data-target='card']")
+                const leftButton = document.querySelector("[data-action='slideLeft']")
+                const rightButton = document.querySelector("[data-action='slideRight']")
                 // Limit carousel width
-                const carouselWidth = carousel.offsetWidth;
-                const cardStyle = card.currentStyle || window.getComputedStyle(card);
-                const cardMarginRight = Number(cardStyle.marginRight.match(/\d+/g)[0]);
+                const carouselWidth = carousel.offsetWidth
+                const cardStyle = card.currentStyle || window.getComputedStyle(card)
+                const cardMarginRight = Number(cardStyle.marginRight.match(/\d+/g)[0])
                 // total num of cards
-                const cardCount = carousel.querySelectorAll("[data-target='card']").length;
-                const cardWidth = card.offsetWidth;
+                const cardCount = carousel.querySelectorAll("[data-target='card']").length
+                const cardWidth = card.offsetWidth
                 const maxX = cardCount * cardWidth + cardMarginRight;
       // initial pos
       (offset === 0) ? leftButton.classList.add('hide') : rightButton.classList.remove('hide')
 
-            const doArrows = (os) => {
-        const lst = document.getElementById('lacarouselle');
+      const doArrows = (os) => {
+        const lst = document.getElementById('lacarouselle')
                     let lastSli = lst.children[lst.childElementCount - 2]
-                // hide/show arrows
-                if (os < 0) {
+        // hide/show arrows
+        if (os < 0) {
           leftButton.classList.remove('hide')
-                    if (closurObj.checkSlide(lastSli)) rightButton.classList.add('hide')
-                } else if (os === 0) {
+          if (closurObj.checkSlide(lastSli)) rightButton.classList.add('hide')
+        } else if (os === 0) {
           leftButton.classList.add('hide')
           rightButton.classList.remove('hide')
         }
@@ -383,7 +383,7 @@ header section#progressiveHeaderSection, header section {
       leftButton.addEventListener('click', function () {
         if (offset !== 0 && window.innerWidth >= 1025) {
           offset += cardWidth * 6
-                    carousel.style.transform = 'translateX(' + offset + 'px' + ')'
+          carousel.style.transform = 'translateX(' + offset + 'px' + ')'
           doArrows(offset)
         }
       })
@@ -391,8 +391,8 @@ header section#progressiveHeaderSection, header section {
       rightButton.addEventListener('click', function () {
         if (offset > -maxX && window.innerWidth >= 1025) {
           offset -= cardWidth * 6
-                    carousel.style.transform = 'translateX(' + offset + 'px' + ')'
-                    doArrows(offset)
+          carousel.style.transform = 'translateX(' + offset + 'px' + ')'
+          doArrows(offset)
         }
       })
     },
@@ -401,7 +401,7 @@ header section#progressiveHeaderSection, header section {
       if (document.querySelector('.page__site-stripe')) {
         const stripe = document.querySelector('.page__site-stripe')
         stripe.style.marginDown = 0
-            }
+      }
     },
 
     removeHidden: function () {
@@ -415,11 +415,11 @@ header section#progressiveHeaderSection, header section {
       const {
         visitorGreet, visitorName
       } = sparksOptions
-            this.addCSS(mainStyles)
-            const cat = getHandle()
-            const visitNGreet = visitorGreet + ' ' + visitorName
-            // cat.style.cssText = null
-            const carsl = document.createElement('div')
+      this.addCSS(mainStyles)
+      const cat = getHandle()
+      const visitNGreet = visitorGreet + ' ' + visitorName
+      // cat.style.cssText = null
+      const carsl = document.createElement('div')
       carsl.className = 'carousel__wrapper'
       carsl.innerHTML =
                 '<div class="carousel--container"> <div class="welcome--message"> <p>' +
@@ -427,7 +427,7 @@ header section#progressiveHeaderSection, header section {
                 `
         </p></div>
         <ul id="lacarouselle" class="carousel" data-target="carousel">
-    		<li class="card" data-target="card"> <img width="94" height="130" src=""/>
+    <li class="card" data-target="card"> <img width="94" height="130" src=""/>
         <section class="carousel__footer">
         <p>See all</p>
         <svg width="24" height="22" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z" transform: translateY(2px);/>
@@ -450,8 +450,8 @@ header section#progressiveHeaderSection, header section {
         <div class="carousel__dots"> <a class="carousel--dot"> <span class="visuallyhidden">Slide 1</span> <span class="page"> </span> </a> <a class="carousel--dot sele"> <span class="visuallyhidden">Slide 2</span> <span class="page"></span> <span class="visuallyhidden">(Current Slide) </span> </a> <a class="carousel--dot"> <span class="visuallyhidden">Slide 3 </span> <span class="page"> </span></a> </div></div>`
 
       if (cat !== undefined) cat.parentElement.insertBefore(carsl, cat)
-            this.init()
-        }
+      this.init()
+    }
   }
 })()
 
@@ -459,8 +459,8 @@ window.addEventListener(
   'resize',
   function () {
     closurObj.init()
-        document.body.scrollTop()
-    },
+    document.body.scrollTop()
+  },
   false
 )
 
@@ -555,8 +555,8 @@ window.addEventListener('load', function () {
   }
 
   function compileCards (cards) {
-    	// let lacar = document.getElementById('lacarouselle');
-    	// lacar.innerHTmL = '';
+    // let lacar = document.getElementById('lacarouselle');
+    // lacar.innerHTmL = '';
     let crds = document.createElement('div')
     crds.innerHTmL += ''
     for (let c = 0; c < cards.length; c++) {
@@ -565,7 +565,7 @@ window.addEventListener('load', function () {
 
       <li class="card" data-target="card">
 
-    	<img class="test101"
+    <img class="test101"
           width= ${cards[c].width}
           height= ${cards[c].height}
           data-srcset=${cards[c].image}
@@ -589,12 +589,12 @@ window.addEventListener('load', function () {
       .then((data) => {
         if (document.getElementById('lacarouselle')) {
           const cars = document.getElementById('lacarouselle')
-          carsInnner = cars.innerHTML = '';
+          carsInnner = cars.innerHTML = ''
           const ckndat = data.replace(/\[.*?\]/, '').trim()
 
           cars.innerHTML += `${ckndat} <iframe style="margin-right:0px;
-	            border-width:1px; overflow: hidden;
-	            visibility: hidden; max-width: 0;" srcdoc='<div style="width:0px; border-width: 0px;"></div>'></iframe>`
+            border-width:1px; overflow: hidden;
+            visibility: hidden; max-width: 0;" srcdoc='<div style="width:0px; border-width: 0px;"></div>'></iframe>`
         }
       })
   }
