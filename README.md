@@ -32,38 +32,6 @@
 
 
 
-MS London eText Demibold
-MS London eText Semibold
-Apple Color Emoji Regular
-MS Leeds eText Bold
+Live link to ![JSON Carousel n RegularCarousel.js](https://donpio.tech/repositories/mtest/index.html)
 
 
-Layout 375 x 812
-
-
-#e4e4e4
-#d9d9d9
-#09C980
-
-rgba(0,0,0,0)
-#19322F
-#19322F
-
-
-
-
-300x77
-
-.good-afternoon-jesp {
-  height: 40px;
-  width: 213px;
-  color: #000000;
-  font-family: "MS London eText";
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: 0;
-  line-height: 40px;
-}
-
-
-16mt
