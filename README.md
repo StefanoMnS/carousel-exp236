@@ -32,6 +32,6 @@
 
 
 
-Live link to ![JSON Carousel n RegularCarousel.js](https://donpio.tech/repositories/mtest/index.html)
+Live link to ![Carousels](https://donpio.tech/repositories/mtest/index.html)
 
 
