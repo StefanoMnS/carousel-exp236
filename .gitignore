@@ -2,5 +2,5 @@ node_modules/
 build
 .prettierrc
 .vscode/
-
+.DS_Store
 workflows/
